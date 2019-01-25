@@ -1,19 +1,28 @@
 // use this to copy code snippets or use your browser's console
 
-
-//Your code here
-function justInvoke(fn) {
-  return fn();
+class Event {
+    constructor(title, keywords) {
+        this.title = title;
+        this.keywords = keywords;
+    }
 }
-
-function setThisWithCall(fn, thisValue, arg) {
-  return fn.call(thisValue, arg);
+ 
+class User {
+    constructor(name, interests) {
+        this.name = name;
+        this.interests = interests;
+    }
+ 
+    matchInterests(event) {
+        return event.keywords.some(
+            function(word) {
+                return this.interests.includes(word);
+            }.bind(this) // added to the and of the callback function
+        );
+    }
 }
-
-function setThisWithApply(fn, thisValue, args) {
-  return fn.apply(thisValue, args);
-}
-
-function returnNewFunctionOf(fn, thisValue) {
-  return fn.bind(thisValue);
-}
+ 
+let billy = new User('billy', ['music', 'art', 'movies']);
+let freeMusic = new Event('Free Music Show', ['music', 'free', 'outside']);
+ 
+billy.matchInterests(freeMusic);
